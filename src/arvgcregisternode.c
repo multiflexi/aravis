@@ -752,6 +752,13 @@ _get_integer_value (ArvGcRegisterNode *gc_register_node, guint register_lsb, gui
 			value |= G_MAXUINT64 ^ (mask >> lsb);
 
 		arv_log_genicam ("[GcRegisterNode::_get_integer_value] mask  = 0x%08Lx", mask);
+	} else {
+		unsigned length = _get_length (gc_register_node, NULL);
+
+		if (length < 8 &&
+		    (value & (1 << (length * 8 - 1) != 0)) &&
+		    _get_signedness (gc_register_node, NULL) == ARV_GC_SIGNEDNESS_SIGNED)
+			value |= G_MAXUINT64 ^ ((((guint64) 1) << (length * 8)) - 1);
 	}
 
 	arv_log_genicam ("[GcRegisterNode::_get_integer_value] address = 0x%Lx, value = 0x%Lx",

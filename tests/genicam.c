@@ -534,6 +534,25 @@ register_test (void)
 	value = arv_gc_register_get_address (ARV_GC_REGISTER (node), NULL);
 	g_assert_cmpint (value, ==, 0x20ff);
 
+	node = arv_gc_get_node (genicam, "IntRegisterC");
+	g_assert (ARV_IS_GC_REGISTER (node));
+
+	arv_gc_integer_set_value (ARV_GC_INTEGER (node), 0, NULL);
+
+	node = arv_gc_get_node (genicam, "IntSignedRegisterC");
+	g_assert (ARV_IS_GC_REGISTER (node));
+
+	arv_gc_integer_set_value (ARV_GC_INTEGER (node), -1, NULL);
+
+	value = arv_gc_integer_get_value (ARV_GC_INTEGER (node), NULL);
+	g_assert_cmpint (value, ==, -1);
+
+	node = arv_gc_get_node (genicam, "IntRegisterC");
+	g_assert (ARV_IS_GC_REGISTER (node));
+
+	value = arv_gc_integer_get_value (ARV_GC_INTEGER (node), NULL);
+	g_assert_cmpint (value, ==, 0x00000000ffffffff);
+
 	g_object_unref (device);
 }
 
