@@ -22,13 +22,10 @@ doc_private_headers = [
 
 gnome.gtkdoc ('aravis',
 	      main_xml: 'aravis-docs.xml',
-	      src_dir: [
-	        join_paths (meson.source_root (), 'src')
-	      ],
+	      src_dir: [join_paths (meson.source_root (), 'src')],
 	      gobject_typesfile: 'aravis.types',
 	      dependencies: [aravis_library_dependencies],
-	      scan_args: ['--ignore-headers=' + ' '.join (doc_private_headers),
-	                  '--rebuild-types'],
-	      content_files: ['aravis-overview.xml',
-	                      'aravis-gv.xml'],
+	      scan_args: ['--ignore-headers=' + ' '.join (doc_private_headers), '--rebuild-types'],
+	      content_files: ['aravis-overview.xml', 'aravis-gv.xml'],
+	      install_dir: 'aravis-@0@'.format (aravis_api_version),
 	      install: true)
